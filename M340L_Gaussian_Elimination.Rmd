@@ -135,7 +135,7 @@ SimpleEchelonElimination(test_matrix_2)
 
 # **2. Theoretical: FLOPs**
 
-In the Gaussian Elimination function above, the row reduction of an $m \times n$ matrix requires \$\$`(\sum_{i=1}^{m-1} i)(2n+1)`\$\$ operations.
+In the Gaussian Elimination function above, the row reduction of an $m \times n$ matrix requires $(\sum_{i=1}^{m-1} i)(2n+1)$ operations.
 
 The Row Elimination portion of the function is copied below with comments describing the number of FLOPs required for each component of the function.
 
@@ -151,7 +151,7 @@ x[eliminated_row, ] = x[eliminated_row, ]  - (scaling * x[pivot_row, ])
 
 Thus, for each row that is input to the elimination function above, $2n + 1$ FLOPs are required.
 
-The total number of FLOPs required in the entire row reduction algorithm is then calculated by multiplying the number of rows that are input to the elimination function by $2n + 1$. There are \$\$`\sum_{i=1}^{m-1} i`\$\$ rows that are eliminated (under the assumption that there are not any zero entries in the matrix). Thus, this row reduction of an $m \times n$ matrix requires \$\$`(\sum_{i=1}^{m-1} i)(2n+1)`\$\$ floating point operations.
+The total number of FLOPs required in the entire row reduction algorithm is then calculated by multiplying the number of rows that are input to the elimination function by $2n + 1$. There are $\sum_{i=1}^{m-1} i$ rows that are eliminated (under the assumption that there are not any zero entries in the matrix). Thus, this row reduction of an $m \times n$ matrix requires $(\sum_{i=1}^{m-1} i)(2n+1)$ floating point operations.
 
 # **3. Extension: Jacobi Method**
 
