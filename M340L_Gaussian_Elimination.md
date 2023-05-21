@@ -336,7 +336,7 @@ The Jacobi Method is ineffective for the following types of matrices:
     are non-zero, if possible, while keeping in mind that the matrix
     should be diagonally dominant.
 
-    $$A_{n,n} =  \begin{pmatrix}  a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\  a_{2,1} & 0 & \cdots & a_{2,n} \\  \vdots  & \vdots  & \ddots & \vdots  \\  a_{n,1} & a_{n,2} & \cdots & a_{n,n}  \end{pmatrix}$$
+    $${A_{n,n} =  \begin{pmatrix}  a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\  a_{2,1} & 0 & \cdots & a_{2,n} \\  \vdots  & \vdots  & \ddots & \vdots  \\  a_{n,1} & a_{n,2} & \cdots & a_{n,n}  \end{pmatrix}}$$
 
 2.  Matrices that are not diagonally dominant will not converge using
     the Jacobi Method.
