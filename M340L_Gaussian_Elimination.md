@@ -260,7 +260,8 @@ SimpleEchelonElimination(test_matrix_2)
 # **Theoretical: FLOPs**
 
 In the Gaussian Elimination function above, the row reduction of an
-$m \times n$ matrix requires $`(\sum_{i=1}^{m-1} i)(2n+1)`$ operations.
+$m \times n$ matrix requires $(\sum\limits_{i=1}^{m-1} i)(2n+1)$
+operations.
 
 The Row Elimination portion of the function is copied below with
 comments describing the number of FLOPs required for each component of
@@ -281,11 +282,11 @@ $2n + 1$ FLOPs are required.
 
 The total number of FLOPs required in the entire row reduction algorithm
 is then calculated by multiplying the number of rows that are input to
-the elimination function by $2n + 1$. There are $`\sum_{i=1}^{m-1} i`$
-rows that are eliminated (under the assumption that there are not any
-zero entries in the matrix). Thus, this row reduction of an $m \times n$
-matrix requires $`(\sum_{i=1}^{m-1} i)(2n+1)`$ floating point
-operations.
+the elimination function by $2n + 1$. There are
+$\sum\limits_{i=1}^{m-1} i$ rows that are eliminated (under the
+assumption that there are not any zero entries in the matrix). Thus,
+this row reduction of an $m \times n$ matrix requires
+$(\sum\limits_{i=1}^{m-1} i)(2n+1)$ floating point operations.
 
 # **Extension: Jacobi Method**
 
@@ -300,7 +301,7 @@ $(D+N)x = b$.
 
 After algebraic rearrangement, the equation $x=D^{-1}(b-Rx)$ can be used
 to iteratively estimate $x$, such that
-$`x_{i}^{(k+1)} = \frac{1}{a_{ii}}(b_i - \sum_{j\neq i}^{n} a_{ij} \cdot x_j^k)`$,
+$x_{i}^{(k+1)} = \frac{1}{a_{ii}}(b_i - \sum\limits_{j\neq i}^{n} a_{ij} \cdot x_j^k)$,
 where $x^k$ is the current estimation of $x$, $x^{(k+1)}$ is the next
 estimation of $x$, and $i = 1, 2, ...n$. This process is repeated until
 the residuals between $x^k$ and $x^{(k+1)}$ stabilize.
@@ -313,8 +314,8 @@ initial condition.
 ## Convergence
 
 This iterative method converges when the matrix $A$ is diagonally
-dominant such that $`|a_{ii}| > \sum_{j\neq i,j=1}^{n} |a_{ij}|`$ for
-all $i$. The residuals of the approximations of $x$ converge in less
+dominant such that $|a_{ii}| > \sum\limits_{j\neq i,j=1}^{n} |a_{ij}|$
+for all $i$. The residuals of the approximations of $x$ converge in less
 iterations when the initial guess $x^{(0)}$ is close to the real $x$.
 The opposite is true when the initial guess is far from the real $x$.
 The initial $x^{(0)}$ does not affect whether convergence occurs, but
@@ -331,23 +332,34 @@ The Jacobi Method is ineffective for the following types of matrices:
 
 1.  Matrices with at least one zero diagonal entry are problematic
     because a zero in the term $a_{i,i}$ in
-    $`x_{i}^{(k+1)} = \frac{1}{a_{ii}}(b_i - \sum_{j\neq i}^{n} a_{ij} \cdot x_j^k)`$
+    $x_{i}^{(k+1)} = \frac{1}{a_{ii}}(b_i - \sum\limits_{j\neq i}^{n} a_{ij} \cdot x_j^k)$
     results in an undefined approximation of $x_i$. This could be
     addressed by swapping columns so that all diagonal entries of $A$
     are non-zero, if possible, while keeping in mind that the matrix
     should be diagonally dominant.
 
-    $`A_{n,n} = \begin{pmatrix} a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\ a_{2,1} & 0 & \cdots & a_{2,n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{n,1} & a_{n,2} & \cdots & a_{n,n} \end{pmatrix}`$
+$$
+A_{n,n} =  \begin{pmatrix}  a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\  a_{2,1} & 0 & \cdots & a_{2,n} \\  \vdots  & \vdots  & \ddots & \vdots  \\  a_{n,1} & a_{n,2} & \cdots & a_{n,n}  \end{pmatrix}
+$$
 
 2.  Matrices that are not diagonally dominant will not converge using
     the Jacobi Method.
 
-    $`A = \begin{pmatrix} 0.1 & 2 & 3 \\ 20 & 0.15 & 8 \\  7 & 4 & 0.05 \end{pmatrix}`$
+$$
+A =  \begin{pmatrix}  
+0.1 & 2 & 3 \\  
+20 & 0.15 & 8 \\  
+  7 & 4 & 0.05  \end{pmatrix}
+$$
 
 3.  Ill-conditioned matrices with a large condition number will not
     converge using the Jacobi Method.
 
-    $`A = \begin{pmatrix} 0.04 & 0.011 \\ 0.02 & 0.005 \end{pmatrix}`$
+$$
+A =  \begin{pmatrix}  
+0.04 & 0.011 \\  
+0.02 & 0.005 \end{pmatrix}
+$$
 
 4.  The Jacobi Method cannot approximate solutions for rectangular
     matrices.
