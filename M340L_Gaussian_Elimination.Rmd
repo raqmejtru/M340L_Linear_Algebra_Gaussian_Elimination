@@ -4,7 +4,10 @@ author: 'Table of Contents'
 output:
   github_document:
     toc: true
-    toc_depth: 1
+    toc_depth: 2
+    math_method:
+      engine: webtex
+      url: http://chart.apis.google.com/chart?cht=tx&chl=
 ---
 
 ```{r setup, include=FALSE}
@@ -12,7 +15,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # 1. Computational: Gaussian Elimination
+
 ## Function
+
 The `SimpleEchelonElimination` function outlined below performs Gaussian Elimination for an $m \times n$ matrix with partial pivoting to reduce floating point error.
 
 ```{r}
@@ -100,21 +105,27 @@ SimpleEchelonElimination = function(x){
   return(output)
 }
 ```
-  
+
 ## Test Case: 11 x 10
-An $11 \times 10$ `test_matrix` is defined below by sampling entries from a uniform distribution from 0 to 1. 
+
+An $11 \times 10$ `test_matrix` is defined below by sampling entries from a uniform distribution from 0 to 1.
+
 ```{r}
 set.seed(1)
 test_matrix = matrix(data = runif((11*10), min = 0, max = 1), nrow = 11, ncol = 10)
 test_matrix
 ```
 
-The `SimpleEchelonElimination` function is used to row reduce the `test_matrix` below. 
+The `SimpleEchelonElimination` function is used to row reduce the `test_matrix` below.
+
 ```{r}
 SimpleEchelonElimination(test_matrix)
 ```
+
 ## Other Test Cases
-The matrices defined below are used to show that the `SimpleEchelonElimination` function also works for square matrices and matrices with more columns than rows. 
+
+The matrices defined below are used to show that the `SimpleEchelonElimination` function also works for square matrices and matrices with more columns than rows.
+
 ```{r}
 square_matrix = matrix(data = runif((6*6), min = 0, max = 1), nrow = 6, ncol = 6)
 square_matrix
@@ -125,12 +136,9 @@ test_matrix_2
 SimpleEchelonElimination(test_matrix_2)
 ```
 
-
-
-
 # 2. Theoretical: FLOPs
 
-In the Gaussian Elimination function above, the row reduction of an $m \times n$ matrix requires $(\sum_{i=1}^{m-1}i)(2n+1)$ operations.
+In the Gaussian Elimination function above, the row reduction of an $m \times n$ matrix requires $(\sum_{i=1}^{m-1} i)(2n+1)$ operations.
 
 The Row Elimination portion of the function is copied below with comments describing the number of FLOPs required for each component of the function.
 
@@ -146,7 +154,7 @@ x[eliminated_row, ] = x[eliminated_row, ]  - (scaling * x[pivot_row, ])
 
 Thus, for each row that is input to the elimination function above, $2n + 1$ FLOPs are required.
 
-The total number of FLOPs required in the entire row reduction algorithm is then calculated by multiplying the number of rows that are input to the elimination function by $2n + 1$. There are $\sum_{i=1}^{m-1}i$ rows that are eliminated (under the assumption that there are not any zero entries in the matrix). Thus, this row reduction of an $m \times n$ matrix requires $(\sum_{i=1}^{m-1}i)(2n+1)$ floating point operations.
+The total number of FLOPs required in the entire row reduction algorithm is then calculated by multiplying the number of rows that are input to the elimination function by $2n + 1$. There are $\sum_{i=1}^{m-1} i$ rows that are eliminated (under the assumption that there are not any zero entries in the matrix). Thus, this row reduction of an $m \times n$ matrix requires $(\sum_{i=1}^{m-1} i)(2n+1)$ floating point operations.
 
 # 3. Extension: Jacobi Method
 
@@ -154,13 +162,13 @@ The total number of FLOPs required in the entire row reduction algorithm is then
 
 The Jacobi Method is useful for approximating a solution to the problem $Ax = b$ for high-dimensional matrices for which Gaussian Elimination may be inefficient. The method first decomposes an $n \times n$ matrix $A$ into its diagonal component (a new matrix $D$) and its non-diagonal component (a new matrix $N$). The initial problem can now be defined as $(D+N)x = b$.
 
-After algebraic rearrangement, the equation $x=D^{-1}(b-Rx)$ can be used to iteratively estimate $x$, such that $x_{i}^{(k+1)} = \frac{1}{a_{ii}}(b_i - \sum_{j\neq i}^{n} a_{ij} \cdot x_j^k)$, where $x^k$ is the current estimation of $x$, $x^{(k+1)}$ is the next estimation of $x$, and $i = 1, 2, ...n$. This process is repeated until the residuals between $x^k$ and $x^{(k+1)}$ stabilize.
+After algebraic rearrangement, the equation $x=D^{-1}(b-Rx)$ can be used to iteratively estimate $x$, such that $x_{i}^{(k+1)} = \frac{1}{a_{ii}}(b_i - \sum_{j\neq i}^{n}  a_{ij} \cdot x_j^k)$, where $x^k$ is the current estimation of $x$, $x^{(k+1)}$ is the next estimation of $x$, and $i = 1, 2, ...n$. This process is repeated until the residuals between $x^k$ and $x^{(k+1)}$ stabilize.
 
 The iterative process must be initialized with a guess of $x$. If information about the system is known, an initial $x^{(0)}$ can be defined as such, otherwise the zero vector is typically used as the initial condition.
 
 ## Convergence
 
-This iterative method converges when the matrix $A$ is diagonally dominant such that $|a_{ii}| > \sum_{j\neq i, j=1}^{n} |a_{ij}|$ for all $i$. The residuals of the approximations of $x$ converge in less iterations when the initial guess $x^{(0)}$ is close to the real $x$. The opposite is true when the initial guess is far from the real $x$. The initial $x^{(0)}$ does not affect whether convergence occurs, but rather the speed of convergence. The speed of convergence is also faster for smaller matrices and faster for matrices with smaller conditioning numbers.
+This iterative method converges when the matrix $A$ is diagonally dominant such that $|a_{ii}| > \sum_{j\neq i,j=1}^{n} |a_{ij}|$ for all $i$. The residuals of the approximations of $x$ converge in less iterations when the initial guess $x^{(0)}$ is close to the real $x$. The opposite is true when the initial guess is far from the real $x$. The initial $x^{(0)}$ does not affect whether convergence occurs, but rather the speed of convergence. The speed of convergence is also faster for smaller matrices and faster for matrices with smaller conditioning numbers.
 
 The section below specifies characteristics of matrices that prevent the Jacobi Method from converging.\
 
@@ -168,7 +176,7 @@ The section below specifies characteristics of matrices that prevent the Jacobi 
 
 The Jacobi Method is ineffective for the following types of matrices:
 
-1.  Matrices with at least one zero diagonal entry are problematic because a zero in the term $a_{i,i}$ in $x_{i}^{(k+1)} = \frac{1}{a_{ii}}(b_i - \sum_{j\neq i}^{n} a_{ij} \cdot x_j^k)$ results in an undefined approximation of $x_i$. This could be addressed by swapping columns so that all diagonal entries of $A$ are non-zero, if possible, while keeping in mind that the matrix should be diagonally dominant.
+1.  Matrices with at least one zero diagonal entry are problematic because a zero in the term $a_{i,i}$ in $x_{i}^{(k+1)} = \frac{1}{a_{ii}}(b_i - \sum_{j\neq i}^{n}  a_{ij} \cdot x_j^k)$ results in an undefined approximation of $x_i$. This could be addressed by swapping columns so that all diagonal entries of $A$ are non-zero, if possible, while keeping in mind that the matrix should be diagonally dominant.
 
     $$A_{n,n} =  \begin{pmatrix}  a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\  a_{2,1} & 0 & \cdots & a_{2,n} \\  \vdots  & \vdots  & \ddots & \vdots  \\  a_{n,1} & a_{n,2} & \cdots & a_{n,n}  \end{pmatrix}$$
 
