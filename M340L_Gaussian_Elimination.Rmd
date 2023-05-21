@@ -176,7 +176,13 @@ The Jacobi Method is ineffective for the following types of matrices:
 1.  Matrices with at least one zero diagonal entry are problematic because a zero in the term $a_{i,i}$ in $x_{i}^{(k+1)} = \frac{1}{a_{ii}}(b_i - \sum\limits_{j\neq i}^{n} a_{ij} \cdot x_j^k)$ results in an undefined approximation of $x_i$. This could be addressed by swapping columns so that all diagonal entries of $A$ are non-zero, if possible, while keeping in mind that the matrix should be diagonally dominant.
 
 $$
-A_{n,n} =  \begin{pmatrix}  a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\  a_{2,1} & 0 & \cdots & a_{2,n} \\  \vdots  & \vdots  & \ddots & \vdots  \\  a_{n,1} & a_{n,2} & \cdots & a_{n,n}  \end{pmatrix}
+A_{n,n} =  
+\begin{pmatrix}  
+a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\  
+a_{2,1} & 0 & \cdots & a_{2,n} \\  
+\vdots  & \vdots  & \ddots & \vdots  \\  
+a_{n,1} & a_{n,2} & \cdots & a_{n,n}  
+\end{pmatrix}
 $$
 
 2.  Matrices that are not diagonally dominant will not converge using the Jacobi Method.
