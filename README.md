@@ -3,17 +3,18 @@ M340L: Gaussian Elimination Coding Project
 Table of Contents
 
 - <a href="#1-computational-gaussian-elimination"
-  id="toc-1-computational-gaussian-elimination">1. Computational: Gaussian
-  Elimination</a>
+  id="toc-1-computational-gaussian-elimination"><strong>1. Computational:
+  Gaussian Elimination</strong></a>
   - <a href="#function" id="toc-function">Function</a>
   - <a href="#test-case-11-x-10" id="toc-test-case-11-x-10">Test Case: 11 x
     10</a>
   - <a href="#other-test-cases" id="toc-other-test-cases">Other Test
     Cases</a>
-- <a href="#2-theoretical-flops" id="toc-2-theoretical-flops">2.
-  Theoretical: FLOPs</a>
+- <a href="#2-theoretical-flops" id="toc-2-theoretical-flops"><strong>2.
+  Theoretical: FLOPs</strong></a>
 - <a href="#3-extension-jacobi-method"
-  id="toc-3-extension-jacobi-method">3. Extension: Jacobi Method</a>
+  id="toc-3-extension-jacobi-method"><strong>3. Extension: Jacobi
+  Method</strong></a>
   - <a href="#iterative-scheme" id="toc-iterative-scheme">Iterative
     Scheme</a>
   - <a href="#convergence" id="toc-convergence">Convergence</a>
@@ -22,16 +23,16 @@ Table of Contents
   - <a href="#jacobi-method-vs-row-reduction"
     id="toc-jacobi-method-vs-row-reduction">Jacobi Method vs. Row
     Reduction</a>
-- <a href="#references" id="toc-references">References</a>
+- <a href="#references"
+  id="toc-references"><strong>References</strong></a>
 
-# 1. Computational: Gaussian Elimination
+# **1. Computational: Gaussian Elimination**
 
 ## Function
 
 The `SimpleEchelonElimination` function outlined below performs Gaussian
-Elimination for an
-![m \times n](http://chart.apis.google.com/chart?cht=tx&chl=m%20%5Ctimes%20n "m \times n")
-matrix with partial pivoting to reduce floating point error.
+Elimination for an $m \times n$ matrix with partial pivoting to reduce
+floating point error.
 
 ``` r
 SimpleEchelonElimination = function(x){
@@ -121,10 +122,8 @@ SimpleEchelonElimination = function(x){
 
 ## Test Case: 11 x 10
 
-An
-![11 \times 10](http://chart.apis.google.com/chart?cht=tx&chl=11%20%5Ctimes%2010 "11 \times 10")
-`test_matrix` is defined below by sampling entries from a uniform
-distribution from 0 to 1.
+An $11 \times 10$ `test_matrix` is defined below by sampling entries
+from a uniform distribution from 0 to 1.
 
 ``` r
 set.seed(1)
@@ -258,12 +257,10 @@ SimpleEchelonElimination(test_matrix_2)
     ## [3,] 0.5200482
     ## [4,] 0.4020044
 
-# 2. Theoretical: FLOPs
+# **2. Theoretical: FLOPs**
 
 In the Gaussian Elimination function above, the row reduction of an
-![m \times n](http://chart.apis.google.com/chart?cht=tx&chl=m%20%5Ctimes%20n "m \times n")
-matrix requires
-![(\sum\_{i=1}^{m-1} i)(2n+1)](http://chart.apis.google.com/chart?cht=tx&chl=%28%5Csum_%7Bi%3D1%7D%5E%7Bm-1%7D%20i%29%282n%2B1%29 "(\sum_{i=1}^{m-1} i)(2n+1)")
+$m \times n$ matrix requires \$\$`(\sum_{i=1}^{m-1} i)(2n+1)`\$\$
 operations.
 
 The Row Elimination portion of the function is copied below with
@@ -281,82 +278,50 @@ x[eliminated_row, ] = x[eliminated_row, ]  - (scaling * x[pivot_row, ])
 ```
 
 Thus, for each row that is input to the elimination function above,
-![2n + 1](http://chart.apis.google.com/chart?cht=tx&chl=2n%20%2B%201 "2n + 1")
-FLOPs are required.
+$2n + 1$ FLOPs are required.
 
 The total number of FLOPs required in the entire row reduction algorithm
 is then calculated by multiplying the number of rows that are input to
-the elimination function by
-![2n + 1](http://chart.apis.google.com/chart?cht=tx&chl=2n%20%2B%201 "2n + 1").
-There are
-![\sum\_{i=1}^{m-1} i](http://chart.apis.google.com/chart?cht=tx&chl=%5Csum_%7Bi%3D1%7D%5E%7Bm-1%7D%20i "\sum_{i=1}^{m-1} i")
-rows that are eliminated (under the assumption that there are not any
-zero entries in the matrix). Thus, this row reduction of an
-![m \times n](http://chart.apis.google.com/chart?cht=tx&chl=m%20%5Ctimes%20n "m \times n")
-matrix requires
-![(\sum\_{i=1}^{m-1} i)(2n+1)](http://chart.apis.google.com/chart?cht=tx&chl=%28%5Csum_%7Bi%3D1%7D%5E%7Bm-1%7D%20i%29%282n%2B1%29 "(\sum_{i=1}^{m-1} i)(2n+1)")
-floating point operations.
+the elimination function by $2n + 1$. There are
+\$\$`\sum_{i=1}^{m-1} i`\$\$ rows that are eliminated (under the
+assumption that there are not any zero entries in the matrix). Thus,
+this row reduction of an $m \times n$ matrix requires
+\$\$`(\sum_{i=1}^{m-1} i)(2n+1)`\$\$ floating point operations.
 
-# 3. Extension: Jacobi Method
+# **3. Extension: Jacobi Method**
 
 ## Iterative Scheme
 
 The Jacobi Method is useful for approximating a solution to the problem
-![Ax = b](http://chart.apis.google.com/chart?cht=tx&chl=Ax%20%3D%20b "Ax = b")
-for high-dimensional matrices for which Gaussian Elimination may be
-inefficient. The method first decomposes an
-![n \times n](http://chart.apis.google.com/chart?cht=tx&chl=n%20%5Ctimes%20n "n \times n")
-matrix ![A](http://chart.apis.google.com/chart?cht=tx&chl=A "A") into
-its diagonal component (a new matrix
-![D](http://chart.apis.google.com/chart?cht=tx&chl=D "D")) and its
-non-diagonal component (a new matrix
-![N](http://chart.apis.google.com/chart?cht=tx&chl=N "N")). The initial
-problem can now be defined as
-![(D+N)x = b](http://chart.apis.google.com/chart?cht=tx&chl=%28D%2BN%29x%20%3D%20b "(D+N)x = b").
+$Ax = b$ for high-dimensional matrices for which Gaussian Elimination
+may be inefficient. The method first decomposes an $n \times n$ matrix
+$A$ into its diagonal component (a new matrix $D$) and its non-diagonal
+component (a new matrix $N$). The initial problem can now be defined as
+$(D+N)x = b$.
 
-After algebraic rearrangement, the equation
-![x=D^{-1}(b-Rx)](http://chart.apis.google.com/chart?cht=tx&chl=x%3DD%5E%7B-1%7D%28b-Rx%29 "x=D^{-1}(b-Rx)")
-can be used to iteratively estimate
-![x](http://chart.apis.google.com/chart?cht=tx&chl=x "x"), such that
-![x\_{i}^{(k+1)} = \frac{1}{a\_{ii}}(b_i - \sum\_{j\neq i}^{n} a\_{ij} \cdot x_j^k)](http://chart.apis.google.com/chart?cht=tx&chl=x_%7Bi%7D%5E%7B%28k%2B1%29%7D%20%3D%20%5Cfrac%7B1%7D%7Ba_%7Bii%7D%7D%28b_i%20-%20%5Csum_%7Bj%5Cneq%20i%7D%5E%7Bn%7D%20a_%7Bij%7D%20%5Ccdot%20x_j%5Ek%29 "x_{i}^{(k+1)} = \frac{1}{a_{ii}}(b_i - \sum_{j\neq i}^{n} a_{ij} \cdot x_j^k)"),
-where ![x^k](http://chart.apis.google.com/chart?cht=tx&chl=x%5Ek "x^k")
-is the current estimation of
-![x](http://chart.apis.google.com/chart?cht=tx&chl=x "x"),
-![x^{(k+1)}](http://chart.apis.google.com/chart?cht=tx&chl=x%5E%7B%28k%2B1%29%7D "x^{(k+1)}")
-is the next estimation of
-![x](http://chart.apis.google.com/chart?cht=tx&chl=x "x"), and
-![i = 1, 2, ...n](http://chart.apis.google.com/chart?cht=tx&chl=i%20%3D%201%2C%202%2C%20...n "i = 1, 2, ...n").
-This process is repeated until the residuals between
-![x^k](http://chart.apis.google.com/chart?cht=tx&chl=x%5Ek "x^k") and
-![x^{(k+1)}](http://chart.apis.google.com/chart?cht=tx&chl=x%5E%7B%28k%2B1%29%7D "x^{(k+1)}")
-stabilize.
+After algebraic rearrangement, the equation $x=D^{-1}(b-Rx)$ can be used
+to iteratively estimate $x$, such that
+$x_{i}^{(k+1)} = \frac{1}{a_{ii}}(b_i - \sum_{j\neq i}^{n} a_{ij} \cdot x_j^k)$,
+where $x^k$ is the current estimation of $x$, $x^{(k+1)}$ is the next
+estimation of $x$, and $i = 1, 2, ...n$. This process is repeated until
+the residuals between $x^k$ and $x^{(k+1)}$ stabilize.
 
-The iterative process must be initialized with a guess of
-![x](http://chart.apis.google.com/chart?cht=tx&chl=x "x"). If
-information about the system is known, an initial
-![x^{(0)}](http://chart.apis.google.com/chart?cht=tx&chl=x%5E%7B%280%29%7D "x^{(0)}")
-can be defined as such, otherwise the zero vector is typically used as
-the initial condition.
+The iterative process must be initialized with a guess of $x$. If
+information about the system is known, an initial $x^{(0)}$ can be
+defined as such, otherwise the zero vector is typically used as the
+initial condition.
 
 ## Convergence
 
-This iterative method converges when the matrix
-![A](http://chart.apis.google.com/chart?cht=tx&chl=A "A") is diagonally
-dominant such that
-![\|a\_{ii}\| \> \sum\_{j\neq i,j=1}^{n} \|a\_{ij}\|](http://chart.apis.google.com/chart?cht=tx&chl=%7Ca_%7Bii%7D%7C%20%3E%20%5Csum_%7Bj%5Cneq%20i%2Cj%3D1%7D%5E%7Bn%7D%20%7Ca_%7Bij%7D%7C "|a_{ii}| > \sum_{j\neq i,j=1}^{n} |a_{ij}|")
-for all ![i](http://chart.apis.google.com/chart?cht=tx&chl=i "i"). The
-residuals of the approximations of
-![x](http://chart.apis.google.com/chart?cht=tx&chl=x "x") converge in
-less iterations when the initial guess
-![x^{(0)}](http://chart.apis.google.com/chart?cht=tx&chl=x%5E%7B%280%29%7D "x^{(0)}")
-is close to the real
-![x](http://chart.apis.google.com/chart?cht=tx&chl=x "x"). The opposite
-is true when the initial guess is far from the real
-![x](http://chart.apis.google.com/chart?cht=tx&chl=x "x"). The initial
-![x^{(0)}](http://chart.apis.google.com/chart?cht=tx&chl=x%5E%7B%280%29%7D "x^{(0)}")
-does not affect whether convergence occurs, but rather the speed of
-convergence. The speed of convergence is also faster for smaller
-matrices and faster for matrices with smaller conditioning numbers.
+This iterative method converges when the matrix $A$ is diagonally
+dominant such that $|a_{ii}| > \sum_{j\neq i,j=1}^{n} |a_{ij}|$ for all
+$i$. The residuals of the approximations of $x$ converge in less
+iterations when the initial guess $x^{(0)}$ is close to the real $x$.
+The opposite is true when the initial guess is far from the real $x$.
+The initial $x^{(0)}$ does not affect whether convergence occurs, but
+rather the speed of convergence. The speed of convergence is also faster
+for smaller matrices and faster for matrices with smaller conditioning
+numbers.
 
 The section below specifies characteristics of matrices that prevent the
 Jacobi Method from converging.  
@@ -366,38 +331,29 @@ Jacobi Method from converging.
 The Jacobi Method is ineffective for the following types of matrices:
 
 1.  Matrices with at least one zero diagonal entry are problematic
-    because a zero in the term
-    ![a\_{i,i}](http://chart.apis.google.com/chart?cht=tx&chl=a_%7Bi%2Ci%7D "a_{i,i}")
-    in
-    ![x\_{i}^{(k+1)} = \frac{1}{a\_{ii}}(b_i - \sum\_{j\neq i}^{n} a\_{ij} \cdot x_j^k)](http://chart.apis.google.com/chart?cht=tx&chl=x_%7Bi%7D%5E%7B%28k%2B1%29%7D%20%3D%20%5Cfrac%7B1%7D%7Ba_%7Bii%7D%7D%28b_i%20-%20%5Csum_%7Bj%5Cneq%20i%7D%5E%7Bn%7D%20a_%7Bij%7D%20%5Ccdot%20x_j%5Ek%29 "x_{i}^{(k+1)} = \frac{1}{a_{ii}}(b_i - \sum_{j\neq i}^{n} a_{ij} \cdot x_j^k)")
-    results in an undefined approximation of
-    ![x_i](http://chart.apis.google.com/chart?cht=tx&chl=x_i "x_i").
-    This could be addressed by swapping columns so that all diagonal
-    entries of ![A](http://chart.apis.google.com/chart?cht=tx&chl=A "A")
+    because a zero in the term $a_{i,i}$ in
+    $x_{i}^{(k+1)} = \frac{1}{a_{ii}}(b_i - \sum_{j\neq i}^{n} a_{ij} \cdot x_j^k)$
+    results in an undefined approximation of $x_i$. This could be
+    addressed by swapping columns so that all diagonal entries of $A$
     are non-zero, if possible, while keeping in mind that the matrix
     should be diagonally dominant.
 
-    ![A\_{n,n} =  \begin{pmatrix}  a\_{1,1} & a\_{1,2} & \cdots & a\_{1,n} \\\\  a\_{2,1} & 0 & \cdots & a\_{2,n} \\\\  \vdots  & \vdots  & \ddots & \vdots  \\\\  a\_{n,1} & a\_{n,2} & \cdots & a\_{n,n}  \end{pmatrix}](http://chart.apis.google.com/chart?cht=tx&chl=A_%7Bn%2Cn%7D%20%3D%20%20%5Cbegin%7Bpmatrix%7D%20%20a_%7B1%2C1%7D%20%26%20a_%7B1%2C2%7D%20%26%20%5Ccdots%20%26%20a_%7B1%2Cn%7D%20%5C%5C%20%20a_%7B2%2C1%7D%20%26%200%20%26%20%5Ccdots%20%26%20a_%7B2%2Cn%7D%20%5C%5C%20%20%5Cvdots%20%20%26%20%5Cvdots%20%20%26%20%5Cddots%20%26%20%5Cvdots%20%20%5C%5C%20%20a_%7Bn%2C1%7D%20%26%20a_%7Bn%2C2%7D%20%26%20%5Ccdots%20%26%20a_%7Bn%2Cn%7D%20%20%5Cend%7Bpmatrix%7D "A_{n,n} =  \begin{pmatrix}  a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\  a_{2,1} & 0 & \cdots & a_{2,n} \\  \vdots  & \vdots  & \ddots & \vdots  \\  a_{n,1} & a_{n,2} & \cdots & a_{n,n}  \end{pmatrix}")
+    $$A_{n,n} =  \begin{pmatrix}  a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\  a_{2,1} & 0 & \cdots & a_{2,n} \\  \vdots  & \vdots  & \ddots & \vdots  \\  a_{n,1} & a_{n,2} & \cdots & a_{n,n}  \end{pmatrix}$$
 
 2.  Matrices that are not diagonally dominant will not converge using
     the Jacobi Method.
 
-    ![A =  \begin{pmatrix}  
-    0.1 & 2 & 3 \\\\  
-    20 & 0.15 & 8 \\\\  
-      7 & 4 & 0.05  \end{pmatrix}](http://chart.apis.google.com/chart?cht=tx&chl=A%20%3D%20%20%5Cbegin%7Bpmatrix%7D%20%20%0A0.1%20%26%202%20%26%203%20%5C%5C%20%20%0A20%20%26%200.15%20%26%208%20%5C%5C%20%20%0A%20%207%20%26%204%20%26%200.05%20%20%5Cend%7Bpmatrix%7D "A =  \begin{pmatrix}  
+    $$A =  \begin{pmatrix}  
     0.1 & 2 & 3 \\  
     20 & 0.15 & 8 \\  
-      7 & 4 & 0.05  \end{pmatrix}")
+      7 & 4 & 0.05  \end{pmatrix}$$
 
 3.  Ill-conditioned matrices with a large condition number will not
     converge using the Jacobi Method.
 
-    ![A =  \begin{pmatrix}  
-    0.04 & 0.011 \\\\  
-    0.02 & 0.005 \end{pmatrix}](http://chart.apis.google.com/chart?cht=tx&chl=A%20%3D%20%20%5Cbegin%7Bpmatrix%7D%20%20%0A0.04%20%26%200.011%20%5C%5C%20%20%0A0.02%20%26%200.005%20%5Cend%7Bpmatrix%7D "A =  \begin{pmatrix}  
+    $$A =  \begin{pmatrix}  
     0.04 & 0.011 \\  
-    0.02 & 0.005 \end{pmatrix}")
+    0.02 & 0.005 \end{pmatrix}$$
 
 4.  The Jacobi Method cannot approximate solutions for rectangular
     matrices.
@@ -405,19 +361,12 @@ The Jacobi Method is ineffective for the following types of matrices:
 ## Jacobi Method vs. Row Reduction
 
 Compared to Gaussian Elimination, the Jacobi Method is a more efficient
-way to solve the problem
-![Ax = b](http://chart.apis.google.com/chart?cht=tx&chl=Ax%20%3D%20b "Ax = b")
-for an
-![n \times n](http://chart.apis.google.com/chart?cht=tx&chl=n%20%5Ctimes%20n "n \times n")
-matrix ![A](http://chart.apis.google.com/chart?cht=tx&chl=A "A") that
+way to solve the problem $Ax = b$ for an $n \times n$ matrix $A$ that
 satisfies the convergence criteria above, since the iterative algorithm
-requires
-![\mathcal O{(n^2)}](http://chart.apis.google.com/chart?cht=tx&chl=%5Cmathcal%20O%7B%28n%5E2%29%7D "\mathcal O{(n^2)}")
-operations, while row reduction requires
-![\mathcal O{(n^3)}](http://chart.apis.google.com/chart?cht=tx&chl=%5Cmathcal%20O%7B%28n%5E3%29%7D "\mathcal O{(n^3)}")
-operations.
+requires $\mathcal O{(n^2)}$ operations, while row reduction requires
+$\mathcal O{(n^3)}$ operations.
 
-# References
+# **References**
 
 Kaur H, Kaur K. 2012. Convergence of Jacobi and Gauss-Seidel Method and
 Error Reduction Factor. IOSR Journal of Mathematics. 2(2): p. 20–23.
