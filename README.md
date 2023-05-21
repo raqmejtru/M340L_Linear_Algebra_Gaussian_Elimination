@@ -245,7 +245,10 @@ SimpleEchelonElimination(test_matrix_2)
 # 2. Theoretical: FLOPs
 
 In the Gaussian Elimination function above, the row reduction of an
-$m \times n$ matrix requires $(\sum_{i=1}^{m-1}i)(2n+1)$ operations.
+$m \times n$ matrix requires <a
+href="https://render.githubusercontent.com/render/math?math=(\\sum\_%7Bi=1%7D\"
+class="uri">https://render.githubusercontent.com/render/math?math=(\\sum\_{i=1}\</a>^{m-1}
+i)(2n+1) operations.
 
 The Row Elimination portion of the function is copied below with
 comments describing the number of FLOPs required for each component of
@@ -266,10 +269,10 @@ $2n + 1$ FLOPs are required.
 
 The total number of FLOPs required in the entire row reduction algorithm
 is then calculated by multiplying the number of rows that are input to
-the elimination function by $2n + 1$. There are $\sum_{i=1}^{m-1}i$ rows
-that are eliminated (under the assumption that there are not any zero
-entries in the matrix). Thus, this row reduction of an $m \times n$
-matrix requires $(\sum_{i=1}^{m-1}i)(2n+1)$ floating point operations.
+the elimination function by $2n + 1$. There are $\sum_{i=1}^{m-1} i$
+rows that are eliminated (under the assumption that there are not any
+zero entries in the matrix). Thus, this row reduction of an $m \times n$
+matrix requires $(\sum_{i=1}^{m-1} i)(2n+1)$ floating point operations.
 
 # 3. Extension: Jacobi Method
 
@@ -297,7 +300,7 @@ initial condition.
 ## Convergence
 
 This iterative method converges when the matrix $A$ is diagonally
-dominant such that $|a_{ii}| > \sum_{j\neq i, j=1}^{n} |a_{ij}|$ for all
+dominant such that $|a_{ii}| > \sum_{j\neq i,j=1}^{n} |a_{ij}|$ for all
 $i$. The residuals of the approximations of $x$ converge in less
 iterations when the initial guess $x^{(0)}$ is close to the real $x$.
 The opposite is true when the initial guess is far from the real $x$.
